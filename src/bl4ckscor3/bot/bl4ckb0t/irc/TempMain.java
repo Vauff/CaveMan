@@ -16,7 +16,8 @@ public class TempMain
 				.setRealName("bl4ckb0t3")
 				.setNickservPassword(Passwords.NICKSERV.getPassword())
 				.setHostName("irc.esper.net")
-				.setPort(6667);
+				.setPort(6697)
+				.useSSL(true);
 
 		config.start();
 	}

@@ -3,6 +3,9 @@ package bl4ckscor3.bot.bl4ckb0t.irc;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.security.Security;
+
+import javax.net.ssl.SSLSocket;
 
 /**
  * Holds information about an IRC bot
@@ -16,6 +19,7 @@ public class BotConfig
 	private String nickservPassword;
 	private String hostName;
 	private int port;
+	private boolean useSSL;
 	
 	/**
 	 * @param name The name of the bot
@@ -71,6 +75,15 @@ public class BotConfig
 		return this;
 	}
 	
+	/**
+	 * @param use Wether or not to use an SSL connection
+	 */
+	public BotConfig useSSL(boolean use)
+	{
+		useSSL = use;
+		return this;
+	}
+	
 	//------------------------------------\\
 	
 	/**
@@ -121,6 +134,14 @@ public class BotConfig
 		return port;
 	}
 	
+	/**
+	 * @return Wether or not the connection should use SSL
+	 */
+	public boolean usesSSL()
+	{
+		return useSSL;
+	}
+	
 	//------------------------------------\\
 	
 	public void start()
@@ -140,11 +161,22 @@ public class BotConfig
 		private BufferedReader in;
 		private CustomPrintWriter out;
 		
+		@SuppressWarnings("restriction")
 		public Connection(BotConfig config)
 		{
 			try
 			{
-				socket = new Socket(config.getHostName(), config.getPort());
+				if(config.usesSSL())
+				{
+					UtilSSLSocketFactory sslFactory;
+					
+					Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+					sslFactory = new UtilSSLSocketFactory().trustAllCertificates();
+					socket = (SSLSocket)sslFactory.createSocket(config.getHostName(), config.getPort());
+				}
+				else
+					socket = new Socket(config.getHostName(), config.getPort());
+	
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				out = new CustomPrintWriter(socket.getOutputStream(), true);
 
@@ -159,7 +191,7 @@ public class BotConfig
 					
 					if(read.startsWith("PING"))
 						out.println(read.replace("PING", "PONG"));
-					else if(read.equals(":%s MODE %s :+i".replace("%s", config.getNick())))
+					else if(read.equals((":%s MODE %s :+" + (config.usesSSL() ? "Z" : "") + "i").replace("%s", config.getNick())))
 						out.println("PRIVMSG nickserv :identify " + config.getNickservPassword());
 				}
 			}
