@@ -1,11 +1,7 @@
 package bl4ckscor3.bot.bl4ckb0t.irc;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import java.security.Security;
-
-import javax.net.ssl.SSLSocket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Holds information about an IRC bot
@@ -20,6 +16,7 @@ public class BotConfig
 	private String hostName;
 	private int port;
 	private boolean useSSL;
+	private List<Listener> listeners = new ArrayList<Listener>();
 	
 	/**
 	 * @param name The name of the bot
@@ -84,6 +81,15 @@ public class BotConfig
 		return this;
 	}
 	
+	/**
+	 * @param listener The listener to add
+	 */
+	public BotConfig addListener(Listener l)
+	{
+		listeners.add(l);
+		return this;
+	}
+	
 	//------------------------------------\\
 	
 	/**
@@ -142,63 +148,11 @@ public class BotConfig
 		return useSSL;
 	}
 	
-	//------------------------------------\\
-	
-	public void start()
-	{
-		new Connection(this);
-	}
-	
-	//------------------------------------\\
-	
 	/**
-	 * Establishes a connection with an IRC server and also manages events
-	 * @author bl4ckscor3
+	 * @return All the listeners of this bot
 	 */
-	private class Connection
+	public List<Listener> getListeners()
 	{
-		private Socket socket;
-		private BufferedReader in;
-		private CustomPrintWriter out;
-		
-		@SuppressWarnings("restriction")
-		public Connection(BotConfig config)
-		{
-			try
-			{
-				if(config.usesSSL())
-				{
-					UtilSSLSocketFactory sslFactory;
-					
-					Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-					sslFactory = new UtilSSLSocketFactory().trustAllCertificates();
-					socket = (SSLSocket)sslFactory.createSocket(config.getHostName(), config.getPort());
-				}
-				else
-					socket = new Socket(config.getHostName(), config.getPort());
-	
-				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				out = new CustomPrintWriter(socket.getOutputStream(), true);
-
-				out.println(String.format("USER %s %s %s :%s", config.getNick(), "canopus.uberspace.de", config.getNick(), config.getRealName()));
-				out.println("NICK " + config.getNick());
-
-				while(true)
-				{
-					String read = in.readLine();
-
-					System.out.println(read);
-					
-					if(read.startsWith("PING"))
-						out.println(read.replace("PING", "PONG"));
-					else if(read.equals((":%s MODE %s :+" + (config.usesSSL() ? "Z" : "") + "i").replace("%s", config.getNick())))
-						out.println("PRIVMSG nickserv :identify " + config.getNickservPassword());
-				}
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+		return listeners;
 	}
 }

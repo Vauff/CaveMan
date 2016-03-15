@@ -1,5 +1,7 @@
-package bl4ckscor3.bot.bl4ckb0t.irc;
+package bl4ckscor3.bot.bl4ckb0t;
 
+import bl4ckscor3.bot.bl4ckb0t.irc.Bot;
+import bl4ckscor3.bot.bl4ckb0t.irc.BotConfig;
 import bl4ckscor3.bot.bl4ckb0t.util.Passwords;
 
 /**
@@ -8,6 +10,8 @@ import bl4ckscor3.bot.bl4ckb0t.util.Passwords;
  */
 public class TempMain
 {
+	public static Bot bot;
+	
 	public static void main(String[] args)
 	{
 		BotConfig config = new BotConfig()
@@ -17,8 +21,10 @@ public class TempMain
 				.setNickservPassword(Passwords.NICKSERV.getPassword())
 				.setHostName("irc.esper.net")
 				.setPort(6697)
-				.useSSL(true);
+				.useSSL(true)
+				.addListener(new TempListener());
 
-		config.start();
+		bot = new Bot(config);
+		bot.start();
 	}
 }
