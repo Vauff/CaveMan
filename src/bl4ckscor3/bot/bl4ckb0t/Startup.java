@@ -69,11 +69,11 @@ public class Startup
 	{
 		if(Core.bot.isDevelopment())
 		{
-			Lists.addDefaultChan("#bl4ckb0tTest");
+			Lists.addDefaultChan("#maunztesting");
 			return;
 		}
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/tishdl84z1wmcgs/bl4ckb0t%20chans.txt?dl=1").openStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/8huobu7s0d9me3g/caveman%20chans.txt?dl=1").openStream()));
 
 		for(String s : reader.readLine().split(","))
 		{
@@ -88,7 +88,7 @@ public class Startup
 	 */
 	private static void setAllowedUsers() throws MalformedURLException, IOException
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/0flrfzw3ljmw3u2/allowedUsers.txt?dl=1").openStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/yf2nyiapu89hxq1/allowedUsers.txt?dl=1").openStream()));
 
 		for(String s : reader.readLine().split(","))
 		{
@@ -103,7 +103,7 @@ public class Startup
 	 */
 	private static void setValidUsers() throws MalformedURLException, IOException
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/dyvu276rdwmbt9z/validUsers.txt?dl=1").openStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/mbms0dnop11f0gz/validUsers.txt?dl=1").openStream()));
 
 		for(String s : reader.readLine().split(","))
 		{
@@ -118,7 +118,7 @@ public class Startup
 	 */
 	private static void setIgnoredUsers() throws MalformedURLException, IOException
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/n6ay2ah3itpovp6/ignoredUsers.txt?dl=1").openStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/19tx2mak6zcjedr/ignoredUsers.txt?dl=1").openStream()));
 
 		for(String s : reader.readLine().split(","))
 		{

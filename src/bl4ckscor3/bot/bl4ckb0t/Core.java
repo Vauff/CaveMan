@@ -16,7 +16,7 @@ public class Core
 {
 	public static Bot bot;
 	private static boolean wasStartedAsWIP;
-	private static final String botName = "bl4ckb0t";
+	private static final String botName = "CaveMan";
 	private static final String version = "5.7.1";
 	private static ConfigurationFile customConfig;
 
@@ -55,7 +55,7 @@ public class Core
 				.setLogin(botName)
 				.addServer("irc.esper.net", 6697)
 				.setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates())
-				.setNickservPassword(Passwords.NICKSERV.getPassword())
+				.setNickservPassword(Passwords.NICKSERV)
 				.setAutoNickChange(true)
 				.setAutoReconnect(true)
 				.setMessageDelay(0)
