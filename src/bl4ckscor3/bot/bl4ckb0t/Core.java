@@ -55,7 +55,7 @@ public class Core
 				.setLogin(botName)
 				.addServer("irc.esper.net", 6697)
 				.setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates())
-				.setNickservPassword(Passwords.NICKSERV)
+				.setNickservPassword(Passwords.NICKSERV.getPassword())
 				.setAutoNickChange(true)
 				.setAutoReconnect(true)
 				.setMessageDelay(0)

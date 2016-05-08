@@ -11,7 +11,7 @@ public class Identify extends BasePrivateCommand<PrivateMessageEvent>
 	@Override
 	public void exe(PrivateMessageEvent event, String[] args) throws Exception
 	{
-		Core.bot.sendIRC().identify(Passwords.NICKSERV);
+		Core.bot.sendIRC().identify(Passwords.NICKSERV.getPassword());
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class Evaluate extends BaseChannelCommand<MessageEvent>
 	
 	private void evaluate(MessageEvent event, String input) throws MalformedURLException, IOException
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("http://api.wolframalpha.com/v2/query?appid=" + Passwords.WOLFRAMAPIKEY + "&input=" + input.trim().replace("+", "%2B").replace(' ', '+').replace(',', '.')).openStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("http://api.wolframalpha.com/v2/query?appid=" + Passwords.WOLFRAMAPIKEY.getPassword() + "&input=" + input.trim().replace("+", "%2B").replace(' ', '+').replace(',', '.')).openStream()));
 		String line = "";
 		String channel = event.getChannel().getName();
 		

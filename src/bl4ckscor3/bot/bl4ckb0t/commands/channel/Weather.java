@@ -34,7 +34,7 @@ public class Weather extends BaseChannelCommand<MessageEvent>
 		
 		try
 		{
-			Document doc = Jsoup.connect("http://api.openweathermap.org/data/2.5/weather?q=" + city.trim() + "&mode=html&APPID=" + Passwords.WEATHERAPIKEY).get();
+			Document doc = Jsoup.connect("http://api.openweathermap.org/data/2.5/weather?q=" + city.trim() + "&mode=html&APPID=" + Passwords.WEATHERAPIKEY.getPassword()).get();
 
 			Utilities.sendStarMsg(channel, 
 					Colors.BOLD + doc.select("body > div:nth-child(1)").text() + Colors.NORMAL,
