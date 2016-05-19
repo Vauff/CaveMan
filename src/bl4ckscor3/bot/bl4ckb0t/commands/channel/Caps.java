@@ -27,7 +27,7 @@ public class Caps extends BaseChannelCommand<MessageEvent>
 
 		StringBuilder builder = new StringBuilder();
 
-		if(args.length == 1)
+		if(args.length == 0)
 		{
 			builder.append(lastMessage);
 
@@ -43,15 +43,15 @@ public class Caps extends BaseChannelCommand<MessageEvent>
 		}
 		else
 		{
-			if(args[1].equals("up"))
+			if(args[0].equals("up"))
 				builder.append(lastMessage.toUpperCase());
-			else if(args[1].equals("low"))
+			else if(args[0].equals("low"))
 				builder.append(lastMessage.toLowerCase());
 			else
 				throw new IncorrectCommandExecutionException(getMainAlias());
 		}
 
-		Utilities.sendMessage(event.getUser().getNick(), builder.toString());
+		Utilities.sendMessage(channel, builder.toString());
 		SpellingCorrection.updateLatestMessage(channel, builder.toString(), event.getUser().getNick());
 	}
 
