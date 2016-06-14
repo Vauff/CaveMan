@@ -1,4 +1,4 @@
-**DISCLAIMER: CaveMan is a modified/changed version of bl4ckb0t from how it was on April 30th, 2016. The original author is not responsible for any issues that arise from using this software.**
+**DISCLAIMER: CaveMan is a modified/changed version of bl4ckb0t. The original author is not responsible for any issues that arise from using this software.**
 
 IRC-Bot | Author: bl4ckscor3 | Made with PircBotX 2.1 | Used libraries: Selenium, JSoup and some AOSP classes (see Apache-License part)
 

@@ -170,7 +170,7 @@ public class MiscListener extends ListenerAdapter
 	@Override
 	public void onJoin(JoinEvent event) throws Exception
 	{
-		if(event.getChannel().getName().equals("#bl4ckscor3") && event.getUser().equals("Geffy"))
-			event.getUser().send().mode("-v");
+		if(event.getChannel().getName().equals("#mancave") && event.getUser().equals("Geffy"))
+			event.getUser().send().mode("-o");
 	}
 }
