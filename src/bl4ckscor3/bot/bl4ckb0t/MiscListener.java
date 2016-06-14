@@ -172,5 +172,6 @@ public class MiscListener extends ListenerAdapter
 	{
 		if(event.getChannel().getName().equals("#mancave") && event.getUser().equals("Geffy"))
 			event.getUser().send().mode("-o");
+			event.getUser().send().mode("+v");
 	}
 }
