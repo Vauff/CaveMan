@@ -11,6 +11,7 @@ import bl4ckscor3.bot.bl4ckb0t.commands.channel.ChangeNick;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Changelog;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Decide;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Disable;
+import bl4ckscor3.bot.bl4ckb0t.commands.channel.Distance;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Enable;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Evaluate;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Forge;
@@ -29,6 +30,7 @@ import bl4ckscor3.bot.bl4ckb0t.commands.channel.Remind;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Select;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Source;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Stop;
+import bl4ckscor3.bot.bl4ckb0t.commands.channel.Thumbnail;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Trello;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Twitch;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Twitter;
@@ -52,10 +54,9 @@ import bl4ckscor3.bot.bl4ckb0t.util.Utilities;
 
 public class CMDListener extends ListenerAdapter
 {
-	public static final CustomArrayList<BaseChannelCommand<MessageEvent>> commands = new CustomArrayList<BaseChannelCommand<MessageEvent>>();
-	public static final CustomArrayList<BasePrivateCommand<PrivateMessageEvent>> privCommands = new CustomArrayList<BasePrivateCommand<PrivateMessageEvent>>();
+	public static final CustomArrayList<BaseChannelCommand> commands = new CustomArrayList<BaseChannelCommand>();
+	public static final CustomArrayList<BasePrivateCommand> privCommands = new CustomArrayList<BasePrivateCommand>();
 
-	@SuppressWarnings("unchecked")
 	public static void setupCMDs()
 	{
 		commands.clear();
@@ -66,6 +67,7 @@ public class CMDListener extends ListenerAdapter
 				new ChangeNick(),
 				new Decide(),
 				new Disable(),
+				new Distance(),
 				new Enable(),
 				new Evaluate(),
 				new Help(),
@@ -84,6 +86,7 @@ public class CMDListener extends ListenerAdapter
 				new Select(),
 				new Source(),
 				new Stop(),
+				new Thumbnail(),
 				new Trello(),
 				new Twitch(),
 				new Twitter(),
@@ -127,7 +130,7 @@ public class CMDListener extends ListenerAdapter
 
 			if(Core.bot.isEnabled() && Core.bot.getChannelStates().get(channel))
 			{
-				for(BaseChannelCommand<MessageEvent> cmd : commands)
+				for(BaseChannelCommand cmd : commands)
 				{
 					if(cmd.isEnabled() && cmd.isValidAlias(cmdName))
 					{
@@ -159,7 +162,7 @@ public class CMDListener extends ListenerAdapter
 			}
 			else
 			{
-				for(BaseChannelCommand<MessageEvent> cmd : commands)
+				for(BaseChannelCommand cmd : commands)
 				{
 					if(cmd.isEnabled() && (cmd instanceof Enable || cmd instanceof Disable) && cmd.isValidAlias(cmdName))
 					{
@@ -197,7 +200,7 @@ public class CMDListener extends ListenerAdapter
 			{
 				if(Utilities.isValidUser(event.getUser()))
 				{
-					for(BasePrivateCommand<PrivateMessageEvent> cmd : privCommands)
+					for(BasePrivateCommand cmd : privCommands)
 					{
 						if(cmd.isEnabled() && event.getMessage().startsWith(cmd.getMainAlias()))
 						{

@@ -11,7 +11,7 @@ import org.pircbotx.UtilSSLSocketFactory;
 import org.pircbotx.exception.IrcException;
 
 import bl4ckscor3.bot.bl4ckb0t.logging.Logging;
-import bl4ckscor3.bot.bl4ckb0t.misc.AGMaps;
+import bl4ckscor3.bot.bl4ckb0t.misc.Maps;
 import bl4ckscor3.bot.bl4ckb0t.util.Lists;
 import bl4ckscor3.bot.bl4ckb0t.util.Passwords;
 
@@ -20,7 +20,7 @@ public class Core
 	public static Bot bot;
 	private static boolean wasStartedAsWIP;
 	private static final String botName = "CaveMan";
-	private static final String version = "5.7.5.1";
+	private static final String version = "5.9";
 	private static ConfigurationFile customConfig;
 
 	public static void main(String args[]) throws IOException, IrcException
@@ -72,10 +72,10 @@ public class Core
 		Startup.callMethods();
 		Logging.info("Completed last setup steps...");
 		
-		if(bot.getConfig().isEnabled("queryAGMaps"))
+		if(bot.getConfig().isEnabled("queryMaps"))
 		{
-			Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new AGMaps(), 1, 10, TimeUnit.MINUTES);
-			Logging.info("Started AGMaps executor...");
+			Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new Maps(), 1, 5, TimeUnit.MINUTES);
+			Logging.info("Started Maps executor...");
 		}
 		
 		Logging.info("Starting bot...");

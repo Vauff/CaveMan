@@ -1,11 +1,35 @@
 #Changelog
 ---
+##5.9
+- Added -thumbnail to get the link of the thumbnail of a YouTube video
+- Added and modified some help messages of ConfigEdit
+- Added notification to -tv, -tw and -yt if the requested user doesn't exist
+- Removed faulty devoicing of Geffy due to redundancy
+- Fixed -tv not working
+- Fixed Tweet vote notification showing incorrectly sometimes
+- Fixed error in ShowTweet
+- Fixed config lookup not working with non boolean values
+
+##5.8
+- Added -distance to get the direct distance between two cities
+- Added text to Tweet message if said Tweet has a poll in it
+- Map announcing: Added config value to change server host
+- Map announcing: Added config value to turn off player count
+- Map announcing: Changed name of config values
+- Fixed config command not allowing string value changes
+- Internal changes
+
+####5.7.6
+- Map announcing: Added config option for channel
+- Map announcing: Player count now updates more often
+- Map announcing: Decreased delay
+
 **5.7.5.1**
-- Added config option for map announcing
-- Increased delay
+- Map announcing: Added config option to enable/disable feature
+- Map announcing: Increased delay
 
 ####5.7.5
-- Added map announcing for the aG Surf Skill server
+- Added map announcing for the aG Skill Surf server
 
 ####5.7.4
 - Fixed YouTube stats' date (now removes everything infront of the first number, which should include many many languages)

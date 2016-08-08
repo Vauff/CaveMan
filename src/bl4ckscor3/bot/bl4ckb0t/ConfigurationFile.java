@@ -29,6 +29,7 @@ public class ConfigurationFile
 			"changenick=true",
 			"decide=true",
 			"disable=true",
+			"distance=true",
 			"enable=true",
 			"evaluate=true",
 			"forge=true",
@@ -47,6 +48,7 @@ public class ConfigurationFile
 			"select=true",
 			"source=true",
 			"stop=true",
+			"thumbnail=true",
 			"trello=true",
 			"tv=true",
 			"tw=true",
@@ -84,8 +86,10 @@ public class ConfigurationFile
 			"spellingCorrection=true",
 			"shrugs=true",
 			"kickOnBannedImgurLink=true",
-			"queryAGMaps=true"
-			
+			"queryMaps=false",
+			"mapsChannel=-",
+			"mapsHost=-",
+			"showPlayerCount=true"
 	};
 
 	/**
@@ -176,15 +180,23 @@ public class ConfigurationFile
 	}
 
 	/**
-	 * Checks wether a boolean value from a config option is true
 	 * @param option The option to get the value from
-	 * @return true if true, false if not
+	 * @return true if the option is true, false if not
 	 */
 	public boolean isEnabled(String option)
 	{
 		return Boolean.parseBoolean(values.get(option));
 	}
 
+	/**
+	 * @param option The option to get the value from
+	 * @return The value as a string
+	 */
+	public String getString(String option)
+	{
+		return values.get(option);
+	}
+	
 	/**
 	 * Writes the default values to the file
 	 */
