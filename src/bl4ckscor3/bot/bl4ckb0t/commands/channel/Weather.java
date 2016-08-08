@@ -50,9 +50,9 @@ public class Weather extends BaseChannelCommand
 
 	private String getTemperature(Document doc)
 	{
-		double celsius = Double.parseDouble(doc.select("body > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)").text().replace("°C", ""));
+		double celsius = Double.parseDouble(doc.select("body > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)").text().replace("Â°C", ""));
 
-		return celsius + "°C | " + Utilities.formatDouble(celsius * (9D / 5D) + 32D) + "°F | " + Utilities.formatDouble(celsius + 273.15D) + "K";
+		return celsius + "Â°C | " + Utilities.formatDouble(celsius * (9D / 5D) + 32D) + "Â°F | " + Utilities.formatDouble(celsius + 273.15D) + "K";
 	}
 
 	private String getWindSpeed(Document doc)
