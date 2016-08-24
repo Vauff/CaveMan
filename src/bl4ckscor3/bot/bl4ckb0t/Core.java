@@ -20,7 +20,7 @@ public class Core
 	public static Bot bot;
 	private static boolean wasStartedAsWIP;
 	private static final String botName = "CaveMan";
-	private static final String version = "5.9";
+	private static final String version = "5.9.1";
 	private static ConfigurationFile customConfig;
 
 	public static void main(String args[]) throws IOException, IrcException
@@ -70,6 +70,7 @@ public class Core
 		bot = new Bot(config, wip, customConfig, "-");
 		Lists.clearAll();
 		Startup.callMethods();
+		CMDListener.setupCMDs();
 		Logging.info("Completed last setup steps...");
 		
 		if(bot.getConfig().isEnabled("queryMaps"))

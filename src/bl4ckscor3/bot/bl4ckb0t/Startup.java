@@ -23,43 +23,51 @@ public class Startup
 		setAllowedUsers();
 		setIgnoredUsers();
 		setValidUsers();
+		setBlacklistedWebsites();
 		Core.bot.getConfig().populateArrayMap();
-		CMDListener.setupCMDs();
 	}
-	
+
 	/**
 	 * Retrieves the changelog of the bot and saves it in the list Changelog.versions
 	 */
-	private static void getChangelog() throws IOException
+	private static void getChangelog()
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/bl4ckscor3/bl4ckb0t/master/CHANGELOG.md").openStream()));
-		String line = "";
-		String currentVersion = "";
-		boolean wip = false;
-
-		while((line = reader.readLine()) != null)
+		try
 		{
-			line = line.replace("#", "").replace("*", "");
-			
-			if(Utilities.startsWithNumber(line))
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/Vauff/CaveMan/master/CHANGELOG.md").openStream()));
+			String line = "";
+			String currentVersion = "";
+			boolean wip = false;
+
+			while((line = reader.readLine()) != null)
 			{
-				if(line.endsWith("_WIP"))
+				line = line.replace("#", "").replace("*", "");
+
+				if(Utilities.startsWithNumber(line))
 				{
-					wip = true;
-					continue;
+					if(line.endsWith("_WIP"))
+					{
+						wip = true;
+						continue;
+					}
+
+					wip = false;
+					currentVersion = line;
+					Changelog.versions.put(currentVersion, new ArrayList<String>());
 				}
 
-				wip = false;
-				currentVersion = line;
-				Changelog.versions.put(currentVersion, new ArrayList<String>());
+				if(line.startsWith("-") && !line.startsWith("---") && !wip)
+					Changelog.versions.get(currentVersion).add(line);
 			}
 
-			if(line.startsWith("-") && !line.startsWith("---") && !wip)
-				Changelog.versions.get(currentVersion).add(line);
+			reader.close();
+			Logging.info("All versions added to changelog list.");
 		}
-		
-		reader.close();
-		Logging.info("All versions added to changelog list.");
+		catch(IOException e)
+		{
+			Logging.severe("Changelog could not be loaded!");
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -74,10 +82,11 @@ public class Startup
 		}
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/8huobu7s0d9me3g/caveman%20chans.txt?dl=1").openStream()));
+		String line = "";
 
-		for(String s : reader.readLine().split(","))
+		while((line = reader.readLine()) != null)
 		{
-			Lists.addDefaultChan(s);
+			Lists.addDefaultChan(line);
 		}
 
 		reader.close();
@@ -89,10 +98,11 @@ public class Startup
 	private static void setAllowedUsers() throws MalformedURLException, IOException
 	{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/yf2nyiapu89hxq1/allowedUsers.txt?dl=1").openStream()));
+		String line = "";
 
-		for(String s : reader.readLine().split(","))
+		while((line = reader.readLine()) != null)
 		{
-			Lists.addAllowedUser(s);
+			Lists.addAllowedUser(line);
 		}
 
 		reader.close();
@@ -104,12 +114,13 @@ public class Startup
 	private static void setValidUsers() throws MalformedURLException, IOException
 	{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/mbms0dnop11f0gz/validUsers.txt?dl=1").openStream()));
+		String line = "";
 
-		for(String s : reader.readLine().split(","))
+		while((line = reader.readLine()) != null)
 		{
-			Lists.addValidUser(s);
+			Lists.addValidUser(line);
 		}
-		
+
 		reader.close();
 	}
 
@@ -119,12 +130,33 @@ public class Startup
 	private static void setIgnoredUsers() throws MalformedURLException, IOException
 	{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/19tx2mak6zcjedr/ignoredUsers.txt?dl=1").openStream()));
+		String line = "";
 
-		for(String s : reader.readLine().split(","))
+		while((line = reader.readLine()) != null)
 		{
-			Lists.addIgnoredUser(s);
+			Lists.addIgnoredUser(line);
 		}
-		
+
+		reader.close();
+	}
+
+	/**
+	 * Sets all websites that are blacklisted
+	 * @param website
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
+	private static void setBlacklistedWebsites() throws MalformedURLException, IOException
+	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://dl.dropboxusercontent.com/u/85708850/blacklistedWebsites.txt").openStream()));
+		String line = "";
+
+		while((line = reader.readLine()) != null)
+		{
+			Lists.addBlacklistedWebsite(line);
+		}
+
 		reader.close();
 	}
 }

@@ -74,7 +74,7 @@ public class ConfigurationFile
 			"#            Other             #",
 			"################################",
 			"showCmdColorsInHelpMenu=true",
-			"allowBlacklistWebpages=true",
+			"allowBlacklistWebsites=true",
 			"allowIgnoringUsers=true",
 			"allowCommandAliases=true",
 			"showGitHubRepoInfo=true",
@@ -89,7 +89,8 @@ public class ConfigurationFile
 			"queryMaps=false",
 			"mapsChannel=-",
 			"mapsHost=-",
-			"showPlayerCount=true"
+			"showPlayerCount=true",
+			"showRedditInfo=true"
 	};
 
 	/**

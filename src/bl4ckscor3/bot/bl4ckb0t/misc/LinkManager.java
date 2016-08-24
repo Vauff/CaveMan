@@ -1,12 +1,7 @@
 package bl4ckscor3.bot.bl4ckb0t.misc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -16,6 +11,7 @@ import org.pircbotx.hooks.events.MessageEvent;
 import bl4ckscor3.bot.bl4ckb0t.Core;
 import bl4ckscor3.bot.bl4ckb0t.localization.L10N;
 import bl4ckscor3.bot.bl4ckb0t.logging.Logging;
+import bl4ckscor3.bot.bl4ckb0t.util.Lists;
 import bl4ckscor3.bot.bl4ckb0t.util.Utilities;
 
 public class LinkManager
@@ -31,7 +27,7 @@ public class LinkManager
 
 			if(s.contains("www.") || s.contains("http://") || s.contains("https://"))
 			{
-				if(Core.bot.getConfig().isEnabled("allowBlacklistWebpages") && isWebsiteBlacklisted(s))
+				if(Core.bot.getConfig().isEnabled("allowBlacklistWebsites") && isWebsiteBlacklisted(s))
 				{
 					Logging.info("Website blacklisted: " + s);
 					continue;
@@ -45,6 +41,8 @@ public class LinkManager
 					GitHub.showRepo(channel, s);
 				else if(Core.bot.getConfig().isEnabled("kickOnBannedImgurLink") && channel.equals("#bl4ckscor3") && (s.contains("imgur") && !s.contains("i.imgur") && !s.contains("/gallery/") && !s.contains("/a/")))
 					Core.bot.kick(channel, event.getUser().getNick(), "Only use i.imgur.com links.");
+				else if(Core.bot.getConfig().isEnabled("showRedditInfo") && s.contains("reddit.com"))
+					Reddit.showInfo(channel, s);
 				else if(Core.bot.getConfig().isEnabled("showLinkTitles"))
 				{
 					WebDriver driver = new HtmlUnitDriver();
@@ -79,18 +77,7 @@ public class LinkManager
 
 	private static boolean isWebsiteBlacklisted(String website) throws MalformedURLException, IOException
 	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://www.dropbox.com/s/x95z98frbt1r2ne/blacklistedWebsites.txt?dl=1").openStream()));
-		List<String> blacklistedWebsites = new ArrayList<String>();
-		String line = "";
-
-		while((line = reader.readLine()) != null)
-		{
-			blacklistedWebsites.add(line);
-		}
-
-		reader.close();
-		
-		for(String s : blacklistedWebsites)
+		for(String s : Lists.getBlacklistedWebsites())
 		{
 			if(website.contains(s))
 				return true;
