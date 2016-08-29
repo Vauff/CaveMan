@@ -3,6 +3,7 @@ package bl4ckscor3.bot.bl4ckb0t.misc;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import org.jsoup.Jsoup;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.pircbotx.Colors;
@@ -37,10 +38,28 @@ public class LinkManager
 					ShowTweet.show(channel, s, 0);
 				else if(Core.bot.getConfig().isEnabled("showGitHubCommitInfo") && (s.contains("git.io") || (s.contains("github.com") && s.contains("commit"))))
 					GitHub.showCommit(channel, s);
+				else if(Core.bot.getConfig().isEnabled("showGitHubIssueInfo") && s.contains("github.com") && (s.contains("issues") || s.contains("pull")))
+					GitHub.showIssue(channel, s);
 				else if(Core.bot.getConfig().isEnabled("showGitHubRepoInfo") && s.contains("github.com"))
 					GitHub.showRepo(channel, s);
-				else if(Core.bot.getConfig().isEnabled("kickOnBannedImgurLink") && channel.equals("#bl4ckscor3") && (s.contains("imgur") && !s.contains("i.imgur") && !s.contains("/gallery/") && !s.contains("/a/")))
-					Core.bot.kick(channel, event.getUser().getNick(), "Only use i.imgur.com links.");
+				else if(Core.bot.getConfig().isEnabled("kickOnBannedImgurLink") && channel.equals("#bl4ckscor3") && (s.contains("imgur.com") && !s.contains("i.imgur.com")))
+				{//code courtesy of Vauff
+					int images = 0;
+
+					for(String o : Jsoup.connect(s).get().select("div[class=post-images]").html().split(" "))
+					{
+						if(o.equals("class=\"post-image\">"))
+						{
+							images++;
+
+							if(images == 2)
+								break;
+						}
+					}
+
+					if(images == 1)
+						Core.bot.kick(channel, event.getUser().getNick(), "Only use i.imgur.com links.");
+				}
 				else if(Core.bot.getConfig().isEnabled("showRedditInfo") && s.contains("reddit.com"))
 					Reddit.showInfo(channel, s);
 				else if(Core.bot.getConfig().isEnabled("showLinkTitles"))
