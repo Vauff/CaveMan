@@ -22,7 +22,7 @@ public class Bot extends PircBotX
 	private boolean wasStartedAsWIP;
 	private ConfigurationFile config;
 	private final String cmdPrefix;
-	
+
 	public Bot(Configuration configuration, boolean wip, ConfigurationFile cfg, String prefix)
 	{
 		super(configuration);
@@ -30,7 +30,7 @@ public class Bot extends PircBotX
 		config = cfg;
 		cmdPrefix = prefix;
 	}
-	
+
 	/**
 	 * Kicks a user from a channel
 	 * @param channel The channel to kick from
@@ -52,7 +52,7 @@ public class Bot extends PircBotX
 		sendIRC().quitServer(reason);
 		Logging.severe("BOT LEFT THE SERVER");
 	}
-	
+
 	/**
 	 * Checks wether the bot is started with -wip or not
 	 */
@@ -60,7 +60,7 @@ public class Bot extends PircBotX
 	{
 		return wasStartedAsWIP;
 	}
-	
+
 	/**
 	 * Joins a channel given the bot hasn't already joined the channel
 	 * @param channel The channel to join
@@ -77,16 +77,16 @@ public class Bot extends PircBotX
 			}
 			catch(IOException e)
 			{
-				e.printStackTrace();
+				Logging.stackTrace(e);
 			}
 		}
-		
+
 		if(!channelStates.containsKey(channel))
 			channelStates.put(channel, true);
 
 		Logging.info("Joined " + channel + "...");
 	}
-	
+
 	/**
 	 * Joins a channel with a password given the bot hasn't already joined the channel
 	 * @param channel The channel to join
@@ -107,7 +107,7 @@ public class Bot extends PircBotX
 			}
 			catch(IOException e)
 			{
-				e.printStackTrace();
+				Logging.stackTrace(e);
 			}
 		}
 
@@ -135,11 +135,11 @@ public class Bot extends PircBotX
 					continue outer;
 				}
 			}
-			
+
 			joinChannel(s);
 		}
 	}
-	
+
 	/**
 	 * Leaves a channel given the bot hasn't already left the channel
 	 * @param channel The channel to leave
@@ -154,10 +154,10 @@ public class Bot extends PircBotX
 
 		if(channelStates.containsKey(channel))
 			channelStates.remove(channel);
-		
+
 		Logging.info("Left " + channel + "...");
 	}
-	
+
 	/**
 	 * Sends an action to a channel (/me)
 	 * @param target The channel to send the message to
@@ -168,7 +168,7 @@ public class Bot extends PircBotX
 		sendIRC().action(target, msg);
 		Logging.action(target, getNick(), msg);
 	}
-	
+
 	/**
 	 * Checks wether the bot is enabled or not and returns that value
 	 */
@@ -176,7 +176,7 @@ public class Bot extends PircBotX
 	{
 		return enabled;
 	}
-	
+
 	/**
 	 * Disables the bot
 	 */
@@ -184,7 +184,7 @@ public class Bot extends PircBotX
 	{
 		enabled = false;
 	}
-	
+
 	/**
 	 * Enables the bot
 	 */
@@ -192,7 +192,7 @@ public class Bot extends PircBotX
 	{
 		enabled = true;
 	}
-	
+
 	/**
 	 * Gets the ArrayMap of channel states (enabled/disabled per channel)
 	 */
@@ -200,7 +200,7 @@ public class Bot extends PircBotX
 	{
 		return channelStates;
 	}
-	
+
 	/**
 	 * Gets the bot's custom configuration file
 	 */
@@ -208,7 +208,7 @@ public class Bot extends PircBotX
 	{
 		return config;
 	}
-	
+
 	/**
 	 * Executes a command
 	 * @param e The type of Event the command got sent from (either PrivateMessageEvent or MessageEvent)
@@ -218,7 +218,7 @@ public class Bot extends PircBotX
 	public <E extends Event> void dispatchCommand(E e, ICommand<E> cmd, String[] args) throws Exception
 	{
 		String[] newArgs = new String[args.length - 1];
-		
+
 		for(int i = 0; i < newArgs.length; i++)
 		{
 			newArgs[i] = args[i + 1];
@@ -227,7 +227,7 @@ public class Bot extends PircBotX
 		cmd.exe(e, newArgs);
 		System.gc();
 	}
-	
+
 	/**
 	 * @return The prefix the commands of this bot should start with
 	 */

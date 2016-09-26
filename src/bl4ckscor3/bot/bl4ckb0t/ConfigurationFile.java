@@ -35,6 +35,7 @@ public class ConfigurationFile
 			"forge=true",
 			"help=true",
 			"info=true",
+			"iplocation=true",
 			"join=true",
 			"kick=true",
 			"language=true",
@@ -91,7 +92,8 @@ public class ConfigurationFile
 			"mapsHost=-",
 			"showPlayerCount=true",
 			"showRedditInfo=true",
-			"showGitHubIssueInfo=true"
+			"showGitHubIssueInfo=true",
+			"pushNotificationOnCsgoUpdate=false"
 	};
 
 	/**
@@ -177,7 +179,7 @@ public class ConfigurationFile
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -210,7 +212,7 @@ public class ConfigurationFile
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -233,7 +235,7 @@ public class ConfigurationFile
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -251,7 +253,7 @@ public class ConfigurationFile
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 }

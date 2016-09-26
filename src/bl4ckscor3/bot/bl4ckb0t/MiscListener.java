@@ -10,11 +10,13 @@ import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.events.NickAlreadyInUseEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 
+import com.github.sheigutn.pushbullet.Pushbullet;
+
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.ChangeNick;
 import bl4ckscor3.bot.bl4ckb0t.logging.Logging;
 import bl4ckscor3.bot.bl4ckb0t.misc.LinkManager;
 import bl4ckscor3.bot.bl4ckb0t.misc.SpellingCorrection;
-import bl4ckscor3.bot.bl4ckb0t.misc.YouTubeStats;
+import bl4ckscor3.bot.bl4ckb0t.util.Passwords;
 import bl4ckscor3.bot.bl4ckb0t.util.Reminder;
 import bl4ckscor3.bot.bl4ckb0t.util.Utilities;
 
@@ -27,6 +29,9 @@ public class MiscListener extends ListenerAdapter
 		{
 			if(event.getUser().getNick().equals("Maunz") && event.getMessage().toLowerCase().contains("was pushed to the steam client!"))
 			{
+				if(Core.bot.getConfig().isEnabled("pushNotificationOnCsgoUpdate"))
+					new Pushbullet(Passwords.PUSHBULLETAPIKEY.getPassword()).pushNote("New CS:GO update!", "");
+				
 				Utilities.sendMessage(event.getChannel().getName(), "bl4ckscor3, Vauff, ^");
 				return;
 			}
@@ -82,17 +87,14 @@ public class MiscListener extends ListenerAdapter
 				//sending a welcome back message
 				if(Core.bot.getConfig().isEnabled("showWelcomeBackMsg") && (message.toLowerCase().startsWith("re ") || message.toLowerCase().equals("re")))
 					Utilities.sendMessage(channel, "wb, " + event.getUser().getNick());
-				//youtube recognition
-				else if(Core.bot.getConfig().isEnabled("showYouTubeStats") && (message.contains("www.youtube.com/watch") || message.contains("youtu.be/")))
-					YouTubeStats.sendVideoStats(event);
 				//checking for urls and sending the title if available
 				else
-					LinkManager.checkForLinkAndSendTitle(event);
+					LinkManager.handleLink(event.getMessage(), event.getChannel().getName(), event.getUser().getNick(), false);
 			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -112,7 +114,7 @@ public class MiscListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -129,7 +131,7 @@ public class MiscListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -149,7 +151,7 @@ public class MiscListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 
@@ -162,7 +164,7 @@ public class MiscListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 }

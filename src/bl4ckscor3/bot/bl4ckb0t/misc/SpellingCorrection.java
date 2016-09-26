@@ -120,7 +120,7 @@ public class SpellingCorrection
 				else
 				{
 					previousMessage = getLatestMessage(userToCorrect, storage.get(channel));
-					newMessage = getLatestMessage(event.getUser().getNick(), storage.get(channel)).replace(toReplace, replaceWith); //w/o italics
+					newMessage = getLatestMessage(userToCorrect, storage.get(channel)).replace(toReplace, replaceWith); //w/o italics
 					correctedMessage = getLatestMessage(userToCorrect, storage.get(channel)).replace(toReplace, "\u001d" + replaceWith + Colors.NORMAL); //w/ italics
 				}
 				

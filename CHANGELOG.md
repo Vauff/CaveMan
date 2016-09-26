@@ -1,8 +1,25 @@
 #Changelog
 ---
+###5.10
+- Added -iplocation
+- Added subreddit information
+- Added reddit post information
+- Added reddit comment information
+- Re-added duration to YouTube stats
+- Links within Tweets now get handled, too (YouTube stats, link titles, GitHub stats, etc. now show)
+- Fixed (some?) errors not getting logged to file
+- Fixed SpellingCorrection not working if a user corrects someone else twice in a row
+- Internal changes
+
+###5.9.4
+- Added Pushbullet notification if a new CS:GO update gets released
+- Added notification if the sent Tweet is protected
+- Fixed config command syntax
+
 ###5.9.3
 - Fixed selenium related features not working
 - Fixed ping for CS:GO updates
+- Fixed some reddit links not showing link titles
 
 ###5.9.2
 - Added information upon sending a link of a GitHub repository branch
@@ -473,7 +490,7 @@
 - Fixed "welcome back" message not showing if only "re" was posted
 
 ##2.20
-- bl4ckb0t now detects multiple YouTube links in one message and sends their 
+- bl4ckb0t now detects multiple YouTube links in one message and sends their info
 - bl4ckb0t can now join and leave his default channels
 - Updated -forge for 1.8 beta versions
 - Revamped scrambling algorithm

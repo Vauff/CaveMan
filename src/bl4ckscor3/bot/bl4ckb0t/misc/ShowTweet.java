@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.pircbotx.Colors;
 
 import bl4ckscor3.bot.bl4ckb0t.localization.L10N;
+import bl4ckscor3.bot.bl4ckb0t.logging.Logging;
 import bl4ckscor3.bot.bl4ckb0t.util.Utilities;
 
 public class ShowTweet
@@ -20,7 +21,7 @@ public class ShowTweet
 	 * @param link The link to the Tweet
 	 * @param depth Recursive depth
 	 */
-	public static void show(String channel, String link, int depth) throws IOException
+	public static void show(String channel, String link, String user, int depth) throws IOException
 	{
 		String name = "";
 		String account = "";
@@ -48,12 +49,21 @@ public class ShowTweet
 			else
 			{
 				Utilities.sendMessage(channel, L10N.getString("tweet.error", channel));
-				e.printStackTrace();
+				Logging.stackTrace(e);
 				return;
 			}
 		}
-		
-		name = doc.select("a.account-group:nth-child(2) > strong:nth-child(2)").get(0).toString().split(">")[1].split("<")[0];
+
+		try
+		{
+			name = doc.select("a.account-group:nth-child(2) > strong:nth-child(2)").get(0).toString().split(">")[1].split("<")[0];
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			doc.select("div.ProtectedTimeline");
+			Utilities.sendMessage(channel, L10N.getString("tweet.protectedTweets", channel));
+			return;
+		}
 		
 		if(name.endsWith("Verified Account"))
 		{
@@ -62,7 +72,7 @@ public class ShowTweet
 		}
 		
 		account = "@" + doc.select("a.account-group:nth-child(2) > span:nth-child(4) > b:nth-child(2)").get(0).toString().replace("<b>", "").replace("</b>", "");
-		tweet = doc.select(".TweetTextSize--26px").get(0).text().replace("https://twitter.com", " https://twitter.com").replace("pic.twitter", " pic.twitter").trim();
+		tweet = doc.select(".TweetTextSize--26px").get(0).text().replace("https://twitter.com", " https://twitter.com").replace("pic.twitter", " pic.twitter").replace(" ", "").trim();
 		
 		String msg = Colors.BOLD + name + " (" + account + ") - " + Colors.BOLD + tweet;
 		
@@ -83,16 +93,17 @@ public class ShowTweet
 				hasVote = true;
 		}
 			
-		Utilities.sendMessage(channel, msg.replace("…", "") + (hasVote ? Colors.ITALICS + " (This Tweet has a vote)" : ""));
+		Utilities.sendMessage(channel, msg.replace("…", "") + (hasVote ? Colors.ITALICS + " (" + L10N.getString("tweet.vote", channel) + ")" : ""));
 		
 		try
 		{
 			for(String s : tweet.split(" "))
 			{
-				if(s.endsWith(" …"))
-					show(channel, "https://twitter.com" + s.split("https://twitter.com")[1], ++depth);
+				if(s.contains("twitter.com"))
+					show(channel, s, user, depth + 1);
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException e){} //happens when the Tweet doesn't actually have any quoted Tweet in it
+		LinkManager.handleLink(tweet, channel, user, true);
 	}
 }

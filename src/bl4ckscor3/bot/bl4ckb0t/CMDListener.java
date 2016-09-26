@@ -16,6 +16,7 @@ import bl4ckscor3.bot.bl4ckb0t.commands.channel.Enable;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Evaluate;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Forge;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Help;
+import bl4ckscor3.bot.bl4ckb0t.commands.channel.IPLocation;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Info;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Join;
 import bl4ckscor3.bot.bl4ckb0t.commands.channel.Kick;
@@ -72,6 +73,7 @@ public class CMDListener extends ListenerAdapter
 				new Evaluate(),
 				new Help(),
 				new Info(),
+				new IPLocation(),
 				new Join(),
 				new Kick(),
 				new Forge(),
@@ -150,7 +152,7 @@ public class CMDListener extends ListenerAdapter
 						}
 						catch(Exception e)
 						{
-							e.printStackTrace();
+							Logging.stackTrace(e);
 						}
 					}
 					else
@@ -181,7 +183,7 @@ public class CMDListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}	
 
@@ -213,7 +215,7 @@ public class CMDListener extends ListenerAdapter
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			Logging.stackTrace(e);
 		}
 	}
 }
