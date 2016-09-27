@@ -32,7 +32,7 @@ public class Weather extends BaseChannelCommand
 		
 		try
 		{
-			Document doc = Jsoup.connect("http://api.openweathermap.org/data/2.5/weather?q=" + city.trim() + "&mode=xml&APPID=" + Passwords.WEATHERAPIKEY.getPassword()).get();
+			Document doc = Jsoup.connect("http://api.openweathermap.org/data/2.5/weather?q=" + city.trim() + "&mode=xml&APPID=" + Passwords.WEATHERAPIKEY.getPassword()).ignoreContentType(true).get();
 
 			Utilities.sendStarMsg(channel, doc.select("city").attr("name") + ", " + doc.select("country").text(),
 					L10N.getString("w.temperature", channel).replace("#temperature", Colors.NORMAL + getTemperature(doc)),
