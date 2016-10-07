@@ -1,6 +1,9 @@
 #Changelog
 ---
 ###5.10.1
+- Potentially fixed -w sometimes not working
+- Fixed youtu.be links not working
+- Fixed any link related feature (YouTubeStats, LinkTitle, GitHub, etc.) not working when sent via /me
 - Fixed link titles not showing
 
 ##5.10
