@@ -115,7 +115,7 @@ public class LinkTitle extends Module implements LinkAction
 	{
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://akino.canopus.uberspace.de/bl4ckb0t/files/blacklistedWebsites.txt").openStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("https://dl.dropboxusercontent.com/u/85708850/blacklistedWebsites.txt").openStream()));
 			String line = "";
 
 			while((line = reader.readLine()) != null)
