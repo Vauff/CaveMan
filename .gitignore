@@ -1,4 +1,6 @@
 /.metadata
+/.recommenders
+/_PomUpdater
 */RemoteSystemsTempFiles
 */.settings
 */bin
@@ -11,3 +13,4 @@
 */target/classes/org
 */target/classes/modules
 */target/classes/
+*/target/

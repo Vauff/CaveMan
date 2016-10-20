@@ -1,5 +1,15 @@
 #Changelog
 ---
+###6.0.1
+- Added onUpdate method in Module that gets called when the -update command gets executed
+- Fixed -module load <link> not able to reload modules
+- Fixed fourth -module explanation not showing up
+
+#6.0
+- New module system. Each module has to be installed seperately. They replace all features from previous versions
+- A few fixes in individual modules
+- To see everything that  has changed, please take a look [here](https://github.com/bl4ckscor3/bl4ckb0t/commits/new-system).
+
 ###5.10.1
 - Potentially fixed -w sometimes not working
 - Fixed youtu.be links not working
@@ -705,7 +715,7 @@
 - Fixed -leet conversion
 
 ###1.13.1
-- Added 2²-type calculations
+- Added 2�-type calculations
 - Bot now reconnects on a ping timeout
 - Tweaks to -calc
 - Removed * kicks <name> message
