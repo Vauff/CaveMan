@@ -1,6 +1,7 @@
 # bl4ckb0t
 
 **DISCLAIMER: CaveMan is a modified/changed version of bl4ckb0t. The original author is not responsible for any issues that arise from using this software.**
+
 **IMPORTANT: CaveMan is no longer being updated, not through merges from upstream nor direct updates.**
 
 IRC-Bot for Java 8, made with [PircBotX 2.1](https://github.com/thelq/pircbotx) | [See the bot in action](webchat.esper.net/?channels=bl4ckscor3) | Used libraries: Some AOSP classes, see Apache-License part.  
